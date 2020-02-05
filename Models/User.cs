@@ -10,6 +10,7 @@ namespace WorkSchedule2.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string ImageUrl { get; set; }
         public string SmallImageUrl { get; set; }
         public string City { get; set; }
@@ -20,7 +21,6 @@ namespace WorkSchedule2.Models
         public bool IsAdmin { get; set; }
         public bool IsAvailable { get; set; }
         public int DealId { get; set; }
-        
         public Deal Deal { get; set; }
         public List<Shift> Shifts { get; set; }
     }

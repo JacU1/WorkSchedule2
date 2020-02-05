@@ -7,7 +7,7 @@ namespace WorkSchedule2.Models
 {
     public interface ISummaryRepository
     {
-        IEnumerable<Summary> AllSummary { get; set; }
+        IEnumerable<Summary> AllSummary { get; }
         Summary GetSummaryById(int id);
     }
 }

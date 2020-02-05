@@ -7,7 +7,7 @@ namespace WorkSchedule2.Models
 {
     public interface IShiftRepository
     {
-        IEnumerable<Shift> AllShifts { get; set; }
+        IEnumerable<Shift> AllShifts { get; }
         Shift GetShiftById(int Id);
     }
 }

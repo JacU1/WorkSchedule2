@@ -10,8 +10,9 @@ namespace WorkSchedule2.Models
         public IEnumerable<Deal> AllDeals =>
             new List<Deal>
             {
-                new Deal{Id = 1, Role = "Serwisant" ,DealType= "Umowa zlecenia", PayPerHour = 15, PayPerMonth = 0},
-                new Deal{Id = 2, Role = "Kucharz" ,DealType= "Umowa o prace", PayPerHour = 0, PayPerMonth = 2500}
+                new Deal{Id = 1, Role = "Worker" ,DealType= "Contract of mandate", PayPerHour = 15, PayPerMonth = 0},
+                new Deal{Id = 2, Role = "Instructor" ,DealType= "Contract of employment", PayPerHour = 0, PayPerMonth = 2500},
+                new Deal{Id = 3, Role = "Menager", DealType = "Contract of employment" , PayPerHour = 0, PayPerMonth = 4000}
             };
         public Deal GetDealById(int Id)
         {
