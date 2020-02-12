@@ -1,0 +1,90 @@
+﻿@model WorkSchedule2.Models.User
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.FirstName)</h4>
+                    <h5>@Html.DisplayFor(model => model.FirstName)</h5>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.LastName)</h4>
+                    <h5>@Html.DisplayFor(model => model.LastName)</h5>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.Login)</h4>
+                    <h5>@Html.DisplayFor(model => model.Login)</h5>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.Password)</h4>
+                    <h4>@Html.DisplayFor(model => model.Password)</h4>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.ImageUrl)</h4>
+                    <h5>@Html.DisplayFor(model => model.ImageUrl)</h5>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.SmallImageUrl)</h4>
+                    <h5>@Html.DisplayFor(model => model.SmallImageUrl)</h5>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.City)</h4>
+                    <h5>@Html.DisplayFor(model => model.City)</h5>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.Street)</h4>
+                    <h5>@Html.DisplayFor(model => model.Street)</h5>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.HomeNumber)</h4>
+                    <h5>@Html.DisplayFor(model => model.HomeNumber)</h5>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.PhoneNumber)</h4>
+                    <h5>@Html.DisplayFor(model => model.PhoneNumber)</h5>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.Email)</h4>
+                    <h5>@Html.DisplayFor(model => model.Email)</h5>
+                </div>
+                <div class="form-group">
+                    <br />
+                    <h4>@Html.DisplayNameFor(model => model.DateOfBirth.Date)</h4>
+                    <h5>@Html.DisplayFor(model => model.DateOfBirth.Date)</h5>
+                </div>
+            </div>
+            <br />
+            <form asp-controller="Users">
+                <button asp-action="AdminEditView" asp-route-id="@Model.Id">Edit</button> |
+                <button asp-action="Index">Back to schedule</button>
+            </form>
+            <br />
+        </div>
+    </div>
+</body>
+</html>

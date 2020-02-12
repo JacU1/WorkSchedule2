@@ -22,22 +22,22 @@
         <nav id="sidebar">
             <div class="sidebar-header">
                 <p style="color:white">Work Schedlue</p>
-                <a asp-area="" asp-controller="Users" asp-action="AdminIndex"><h3>MENU</h3></a>
+                <a asp-area="" asp-controller="Users" asp-action="UserIndex"><h3>MENU</h3></a>
             </div>
             <ul class="list-unstyled components">
                 <li>
-                    <a asp-area="" asp-controller="Users" asp-action="AdminIndex">Work Schedule</a>
+                    <a asp-area="" asp-controller="Users" asp-action="UserIndex">Work Schedule</a>
                 </li>
                 <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Lists</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a asp-area="" asp-controller="Users" asp-action="AdminUsersList">User List</a>                        </li>
+                            <a asp-area="" asp-controller="Users" asp-action="MyDetails">My details</a>                        </li>
                         <li>
-                            <a asp-area="" asp-controller="Deals" asp-action="Index">Deals List</a>
+                            <a asp-area="" asp-controller="Deals" asp-action="Index">My Deal</a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Summaries" asp-action="Index">Worker Summary List</a>
+                            <a asp-area="" asp-controller="Summaries" asp-action="Index">My Summary</a>
                         </li>
                     </ul>
                 </li>

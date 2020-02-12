@@ -1,0 +1,46 @@
+﻿@model WorkSchedule2.Models.Deal
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Deal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Role" class="control-label"></label>
+                <input asp-for="Role" class="form-control" />
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DealType" class="control-label"></label>
+                <input asp-for="DealType" class="form-control" />
+                <span asp-validation-for="DealType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PayPerHour" class="control-label"></label>
+                <input asp-for="PayPerHour" class="form-control" />
+                <span asp-validation-for="PayPerHour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PayPerMonth" class="control-label"></label>
+                <input asp-for="PayPerMonth" class="form-control" />
+                <span asp-validation-for="PayPerMonth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

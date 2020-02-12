@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace WorkSchedule2.Models
 {
-    public interface IDealRepository
+    public class ViewModel
     {
-        IEnumerable<Deal> AllDeals { get;}
-        Deal GetDealById(int Id);
+        public int id { get; set; }
     }
 }

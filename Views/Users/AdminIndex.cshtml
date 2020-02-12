@@ -1,0 +1,67 @@
+﻿@model WorkSchedule2.Models.WebApiEvent
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Index";
+}
+
+<h1>Schedule</h1>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Getting started with dhtmlxScheduler</title>
+    <meta charset="utf-8">
+    <script src="~/Scripts/ScheduleDir.js"></script>
+    <link href="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler_material.css" rel="stylesheet" type="text/css" charset="utf-8">
+</head>
+<body>
+    <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100vh;'>
+        <div class="dhx_cal_navline">
+            <div class="dhx_cal_prev_button">&nbsp;</div>
+            <div class="dhx_cal_next_button">&nbsp;</div>
+            <div class="dhx_cal_today_button"></div>
+            <div class="dhx_cal_date"></div>
+            <div class="dhx_cal_tab" name="day_tab"></div>
+            <div class="dhx_cal_tab" name="week_tab"></div>
+            <div class="dhx_cal_tab" name="month_tab"></div>
+        </div>
+        <div class="dhx_cal_header"></div>
+        <div class="dhx_cal_data"></div>
+    </div>
+    <script src="~/Scripts/InitSchedule.js" type="text/javascript">
+    </script>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+            <form asp-controller="Shifts" asp-action="Post">
+                <div class="form-group">
+                    <label>Worker Name</label>
+                    <input asp-for="text" class="form-control" />
+                    <span asp-validation-for="text" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Start of the shift</label>
+                    <input asp-for="start_date" class="form-control" />
+                    <span asp-validation-for="start_date" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Enf of the shift</label>
+                    <input asp-for="end_date" class="form-control" />
+                    <span asp-validation-for="end_date" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>User</label>
+                    <input asp-for="userid" class="form-control" />
+                    <span asp-validation-for="userid" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create Shift" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</body>
+</html >
+

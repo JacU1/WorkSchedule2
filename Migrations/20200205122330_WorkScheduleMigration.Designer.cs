@@ -10,8 +10,8 @@ using WorkSchedule2.Data;
 namespace WorkSchedule2.Migrations
 {
     [DbContext(typeof(WorkScheduleContext))]
-    [Migration("20200204220438_WorkScheduleMigrations")]
-    partial class WorkScheduleMigrations
+    [Migration("20200205122330_WorkScheduleMigration")]
+    partial class WorkScheduleMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -151,6 +151,12 @@ namespace WorkSchedule2.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Login")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")

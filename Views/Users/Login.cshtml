@@ -1,0 +1,35 @@
+﻿@model WorkSchedule2.Models.User;
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Layout_Login";
+}
+
+<h2>Log in to see your schedule in WSchedule !</h2>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login" asp-controller="Users">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <br />
+                <label asp-for="Login" class="control-label"></label>
+                <input asp-for="Login" class="form-control" />
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button asp-action="LoginAction" type="submit" class="btn-default" style="border-radius: 5px ">Log in</button>
+            </div>
+            <div class="form-group">
+                <button asp-action="CreateNew">Create New</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -28,13 +29,17 @@ namespace WorkSchedule2.Controllers
         }
 
         // GET SHIFTS
+        
         [HttpGet]
         public IEnumerable<WebApiEvent> Get()
         {
-            return _context.Shifts
-                .ToList()
-                .Select(e => (WebApiEvent)e);
+            var userid = HttpContext.Session.GetInt32("UserId");
+
+            return _context.Shifts.Where(x => x.UserId == userid)
+                    .ToList()
+                    .Select(e => (WebApiEvent)e);
         }
+        
         [HttpGet("{id}")]
         public WebApiEvent Get(int id)
         {
@@ -55,8 +60,10 @@ namespace WorkSchedule2.Controllers
             return Ok(new
             {
                 tid = newEvent.Id,
-                action = "inserted"
-            });
+                action = "inserted",
+                RedirectResult = Redirect("AdminIndex")
+            }); 
+            ;
         }
 
         // PUT api/events/5

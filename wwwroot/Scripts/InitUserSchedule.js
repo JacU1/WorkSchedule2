@@ -1,5 +1,5 @@
 ﻿    scheduler.config.xml_date = "%Y-%m-%d %H:%i";
-    scheduler.init("scheduler_here", new Date(2020, 06, 06), "week");
+    scheduler.init("scheduler_here", new Date(2020, 02, 06), "week");
 
     // load data from backend
     scheduler.load("/api/shifts", "json");

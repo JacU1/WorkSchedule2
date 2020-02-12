@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using WorkSchedule2.Data;
 
 namespace WorkSchedule2.Models
 {
     public class WebApiEvent
     {
-        public int id { get; set; }
+        private static readonly WorkScheduleContext _context;
+        public int Id { get; set; }
         public string text { get; set; }
         public string start_date { get; set; }
         public string end_date { get; set; }
@@ -17,22 +18,23 @@ namespace WorkSchedule2.Models
         {
             return new WebApiEvent
             {
-                id = ev.Id,
+                Id = ev.Id,
                 text = ev.Position,
                 start_date = ev.Start.ToString("dd-MM-yyyy HH:mm"),
                 end_date = ev.End.ToString("dd-MM-yyyy HH:mm"),
-                userid = ev.UserId
+                userid = ev.UserId,
             };
         }
+
         public static explicit operator Shift(WebApiEvent ev)
         {
             return new Shift
             {
-                Id = ev.id,
+                Id = ev.Id,
                 Position = ev.text,
-                Start = DateTime.Parse(ev.start_date,
+                Start = DateTime.ParseExact(ev.start_date,"dd-MM-yyyy HH:mm",
                     System.Globalization.CultureInfo.InvariantCulture),
-                End = DateTime.Parse(ev.end_date,
+                End = DateTime.ParseExact(ev.end_date,"dd-MM-yyyy HH:mm",
                     System.Globalization.CultureInfo.InvariantCulture),
                 UserId = ev.userid
             };

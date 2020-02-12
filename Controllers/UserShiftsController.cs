@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WorkSchedule2.Data;
 
 namespace WorkSchedule2.Controllers
 {
-    [Route("api/home")]
-    public class HomeController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserShiftsController : ControllerBase
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
     }
 }
