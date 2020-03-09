@@ -23,7 +23,9 @@ namespace WorkSchedule2.Models
         public bool IsAdmin { get; set; }
         public bool IsAvailable { get; set; }
         public int DealId { get; set; }
-        public Deal Deal { get; set; }
-        public List<Shift> Shifts { get; }
+        public virtual Deal Deal { get; set; }
+        public ICollection<Shift> Shifts { get; set; }
+        public ICollection<Vacation> Vacations { get; set; }
+        public ICollection <Sugestion> Sugestions { get; set; }
     }
 }

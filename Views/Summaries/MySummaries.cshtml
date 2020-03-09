@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "_Layout_User";
 }
 
 <h2>User summary</h2>
@@ -10,7 +11,7 @@
     <thead>
         <tr>
             <th>
-                Total Hours Worked
+                Total Hours Worked             
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Grade)
@@ -20,12 +21,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Salary)
-            </th>
-            <th>
-                User first name
-            </th>
-            <th>
-                User last name
             </th>
         </tr>
     </thead>
@@ -45,15 +40,7 @@
                 @Html.DisplayFor(modelItem => item.Salary)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.LastName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="GeneratePDF" asp-route-id="@item.Id">Generate PDF</a>
             </td>
         </tr>
 }

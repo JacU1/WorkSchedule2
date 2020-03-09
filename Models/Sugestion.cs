@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace WorkSchedule2.Models
 {
-    public class Summary
+    public class Sugestion
     {
         public int Id { get; set; }
-        public decimal TotalHoursWorked { get; set; }
-        public int Grade { get; set; }
-        public decimal Bonus { get; set; }
-        public decimal Salary { get; set; }
+        public string Text { get; set; }
+        public string type { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
         public int UserId { get; set; }
         public virtual User User { get; set; }
     }

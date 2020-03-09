@@ -19,7 +19,7 @@ namespace WorkSchedule2.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ShiftsController : ControllerBase
+    public class ShiftsController : Controller
     {
         private readonly WorkScheduleContext _context;
 
@@ -28,18 +28,25 @@ namespace WorkSchedule2.Controllers
             _context = context;
         }
 
-        // GET SHIFTS
-        
+
         [HttpGet]
         public IEnumerable<WebApiEvent> Get()
         {
             var userid = HttpContext.Session.GetInt32("UserId");
 
-            return _context.Shifts.Where(x => x.UserId == userid)
-                    .ToList()
-                    .Select(e => (WebApiEvent)e);
+            var shiftlist = _context.Shifts
+                   .ToList()
+                   .Select(e => (WebApiEvent)e);
+
+            var sugestionlist = _context.Sugestions
+                .ToList()
+                .Select(e => (WebApiEvent)e);
+
+            var allitemslist = shiftlist.Concat(sugestionlist).ToList();
+
+            return allitemslist;
         }
-        
+
         [HttpGet("{id}")]
         public WebApiEvent Get(int id)
         {
@@ -50,28 +57,78 @@ namespace WorkSchedule2.Controllers
 
         // POST api/events
         [HttpPost]
-        public ObjectResult Post([FromForm] WebApiEvent apiEvent)
+        public IActionResult Post([FromForm] WebApiEvent apiEvent)
         {
-            var newEvent = (Shift)apiEvent;
 
-            _context.Shifts.Add(newEvent);
-            _context.SaveChanges();
-
-            return Ok(new
+            if (HttpContext.Session.GetString("UserAdmin") == "True")
             {
-                tid = newEvent.Id,
-                action = "inserted",
-                RedirectResult = Redirect("AdminIndex")
-            }); 
-            ;
+                var username = apiEvent.user_name;
+                var userlastname = apiEvent.user_last_name;
+                var userid = _context.Users.Where(x => x.FirstName == username && x.LastName == userlastname).Select(y => y.Id).First();
+                
+                DateTime start = DateTime.Parse(apiEvent.start_date);
+                DateTime end = DateTime.Parse(apiEvent.end_date);
+
+                int hourscount = 0;
+
+                for (var i = start; i < end; i = i.AddHours(1))
+                {
+                    
+                    if (i.TimeOfDay.Hours >= 9 && i.TimeOfDay.Hours < 17)
+                    {
+                        hourscount++;
+                    }
+                    
+                }
+
+                apiEvent.text = apiEvent.text + "  " + apiEvent.user_name + " " + apiEvent.user_last_name +" "+ "Manager"+ " " + apiEvent.supervisor_name;
+                apiEvent.userid = userid;
+                var newEvent = (Shift)apiEvent;
+                newEvent.UserId = userid;
+                newEvent.Hoursworked = hourscount;
+                _context.Shifts.Add(newEvent);
+                _context.SaveChanges();
+
+                Ok(new
+                {
+                    tid = newEvent.Id,
+                    action = "inserted",
+                });
+
+                return Redirect("/AdminIndex");
+
+            }
+            else if (HttpContext.Session.GetString("UserAdmin") == "False")
+            {
+                var loggeduserid = Convert.ToInt32(HttpContext.Session.GetInt32("UserId"));
+                apiEvent.userid = loggeduserid;
+                apiEvent.type = "waiting";
+                var newEvent = (Sugestion)apiEvent;
+                newEvent.UserId = loggeduserid;
+                newEvent.type = "waiting";
+                _context.Sugestions.Add(newEvent);
+                _context.SaveChanges();
+
+                Ok(new
+                {
+                    tid = newEvent.Id,
+                    action = "inserted"
+                });
+                return Redirect("/UserIndex");
+            }
+            else
+            {
+                return Redirect("/UserIndex");
+            }
         }
 
+
         // PUT api/events/5
-        [HttpPut("{id}")]
-        public ObjectResult Put(int id, [FromForm] WebApiEvent apiEvent)
+        [HttpPut]
+        public ObjectResult Put([FromForm] WebApiEvent apiEvent)
         {
             var updatedEvent = (Shift)apiEvent;
-            var dbEvent = _context.Shifts.Find(id);
+            var dbEvent = _context.Shifts.Find(apiEvent.Id);
             dbEvent.Position = updatedEvent.Position;
             dbEvent.Start = updatedEvent.Start;
             dbEvent.End = updatedEvent.End;

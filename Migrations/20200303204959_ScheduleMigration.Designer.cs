@@ -10,8 +10,8 @@ using WorkSchedule2.Data;
 namespace WorkSchedule2.Migrations
 {
     [DbContext(typeof(WorkScheduleContext))]
-    [Migration("20200205122330_WorkScheduleMigration")]
-    partial class WorkScheduleMigration
+    [Migration("20200303204959_ScheduleMigration")]
+    partial class ScheduleMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,17 +64,54 @@ namespace WorkSchedule2.Migrations
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("SummaryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Supervisor")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<string>("type")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SummaryId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Shifts");
+                });
+
+            modelBuilder.Entity("WorkSchedule2.Models.Sugestion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Sugestions");
                 });
 
             modelBuilder.Entity("WorkSchedule2.Models.Summary", b =>
@@ -87,7 +124,7 @@ namespace WorkSchedule2.Migrations
                     b.Property<decimal>("Bonus")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("DealId")
+                    b.Property<int>("DealId")
                         .HasColumnType("int");
 
                     b.Property<int>("Grade")
@@ -95,9 +132,6 @@ namespace WorkSchedule2.Migrations
 
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("ShiftId")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("TotalHoursWorked")
                         .HasColumnType("decimal(18,2)");
@@ -108,8 +142,6 @@ namespace WorkSchedule2.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DealId");
-
-                    b.HasIndex("ShiftId");
 
                     b.HasIndex("UserId");
 
@@ -170,15 +202,60 @@ namespace WorkSchedule2.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DealId");
+                    b.HasIndex("DealId")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("WorkSchedule2.Models.Vacation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ComplainText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Vacations");
+                });
+
             modelBuilder.Entity("WorkSchedule2.Models.Shift", b =>
                 {
+                    b.HasOne("WorkSchedule2.Models.Summary", "Summary")
+                        .WithMany("Shifts")
+                        .HasForeignKey("SummaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WorkSchedule2.Models.User", "User")
                         .WithMany("Shifts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorkSchedule2.Models.Sugestion", b =>
+                {
+                    b.HasOne("WorkSchedule2.Models.User", "User")
+                        .WithMany("Sugestions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -188,11 +265,9 @@ namespace WorkSchedule2.Migrations
                 {
                     b.HasOne("WorkSchedule2.Models.Deal", "Deal")
                         .WithMany()
-                        .HasForeignKey("DealId");
-
-                    b.HasOne("WorkSchedule2.Models.Shift", "Shift")
-                        .WithMany()
-                        .HasForeignKey("ShiftId");
+                        .HasForeignKey("DealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WorkSchedule2.Models.User", "User")
                         .WithMany()
@@ -204,8 +279,17 @@ namespace WorkSchedule2.Migrations
             modelBuilder.Entity("WorkSchedule2.Models.User", b =>
                 {
                     b.HasOne("WorkSchedule2.Models.Deal", "Deal")
-                        .WithMany()
-                        .HasForeignKey("DealId")
+                        .WithOne("User")
+                        .HasForeignKey("WorkSchedule2.Models.User", "DealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorkSchedule2.Models.Vacation", b =>
+                {
+                    b.HasOne("WorkSchedule2.Models.User", "User")
+                        .WithMany("Vacations")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

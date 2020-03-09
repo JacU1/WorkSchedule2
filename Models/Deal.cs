@@ -9,5 +9,6 @@ namespace WorkSchedule2.Models
         public string DealType { get; set; }    // umowa o pracę , zlecenie 
         public decimal PayPerHour { get; set; }     //stawka godzinowa 
         public decimal PayPerMonth { get; set; }    // stawka miesięczna na 168 h przepracowane (umowa o pracę)
+        public virtual User User { get; set; }
     }
 }

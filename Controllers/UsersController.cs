@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using WorkSchedule2.Data;
 using WorkSchedule2.Models;
 
@@ -25,7 +27,7 @@ namespace WorkSchedule2.Controllers
             return View(await _context.Users.ToListAsync());
         }
 
-        [Route("Login")]
+        [Route("/Login")]
         public IActionResult Login()
         {
             ViewData["Message"] = "Login Page";
@@ -41,11 +43,13 @@ namespace WorkSchedule2.Controllers
             {
                 HttpContext.Session.SetString("UserLogin", login);
                 var userloginlist = _context.Users.ToList().First(x => x.Login == login);
-                var userid = userloginlist.Id.ToString();
+                var userid = userloginlist.Id;
                 var userAdminbool = userloginlist.IsAdmin;
                 var userAdmin = userAdminbool.ToString();
+                var userdealid = userloginlist.DealId;
+                HttpContext.Session.SetInt32("UserDealId", userdealid);
                 HttpContext.Session.SetString("UserAdmin", userAdmin);
-                HttpContext.Session.SetInt32("UserId", Convert.ToInt32(userid));
+                HttpContext.Session.SetInt32("UserId", userid);
                 if(userAdminbool == false)
                 {
                     return Redirect("/UserIndex");
@@ -58,27 +62,24 @@ namespace WorkSchedule2.Controllers
             }
             else
             {
-                return Redirect("/Login");
+                return Redirect("Users/Login");
             }
         }
-
-        [Route("AdminIndex")]
+        [Route("/AdminIndex")]
         public IActionResult AdminIndex()
         {
             return View();
         }
-
-
-        [Route("UserIndex")]
+        [Route("/UserIndex")]
         public IActionResult UserIndex()
         {
             return View();
         }
-
+        
         public async Task<IActionResult> UserDetails()
         {
             var id = HttpContext.Session.GetInt32("UserId");
-            ViewBag["UserID"] = id;
+            //ViewBag["UserID"] = id;
 
             var user = await _context.Users
                 .Include(u => u.Deal)
@@ -90,6 +91,8 @@ namespace WorkSchedule2.Controllers
 
             return View("UserDetails",user);
         }
+
+        
 
 
         // GET: Users/Details/5
@@ -108,7 +111,7 @@ namespace WorkSchedule2.Controllers
                 return NotFound();
             }
 
-            return View("Details",user);
+            return View("AdminDetailsList",user);
         }
 
         // GET: Users/Create

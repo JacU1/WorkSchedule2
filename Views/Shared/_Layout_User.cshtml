@@ -32,12 +32,16 @@
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Lists</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a asp-area="" asp-controller="Users" asp-action="MyDetails">My details</a>                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Deals" asp-action="Index">My Deal</a>
+                            <a asp-area="" asp-controller="Users" asp-action="UserDetails">My details</a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Summaries" asp-action="Index">My Summary</a>
+                            <a asp-area="" asp-controller="Deals" asp-action="UserDeal">My Deal</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Summaries" asp-action="MySummaries">My Summary</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Vacations" asp-action="VacationsUserIndex">Vacations</a>
                         </li>
                     </ul>
                 </li>

@@ -90,21 +90,17 @@
                     <input class="form-check-input" asp-for="IsAvailable" /> @Html.DisplayNameFor(model => model.IsAvailable)
                 </label>
             </div>
-            <div class="form-group">
-                <label asp-for="Deal.DealType" class="control-label">User deal type</label>
-                <select asp-for="Deal.DealType" class="form-control" asp-items="ViewBag.DealType"></select>
-                <span asp-validation-for="Deal.DealType" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        <form asp-controller="Users">
+            <button asp-action="AdminUsersList" class="btn-default" style="border-radius:5px" >Back to User List</button> |
+            <button asp-action="AdminIndex" class="btn-default" style="border-radius:5px" >Back to schedule</button>
+        </form>
+        <br/>
     </div>
 </div>
-
-<div>
-    <a asp-action="AdminEditView">Back to List</a>
-</div>
-
 </body>
 </html>

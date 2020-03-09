@@ -99,12 +99,12 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        <form asp-controller="Users">
+            <button asp-action="UserDetails" class="btn-default" style="border-radius:5px">Back to My Details</button> |
+            <button asp-action="UserIndex" class="btn-default" style="border-radius:5px">Back to schedule</button>
+        </form>
+        <br/>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 </body>
 </html>

@@ -1,0 +1,86 @@
+﻿@model IEnumerable<WorkSchedule2.Models.Sugestion>
+
+@{
+    ViewData["Title"] = "SugestionsList";
+}
+<html>
+    <head>
+        <title>Getting started with dhtmlxScheduler</title>
+        <meta charset="utf-8">
+        <script src="~/Scripts/ScheduleDir.js"></script>
+        <link href="~/css/schedulerstyle.css" rel="stylesheet" type="text/css" charset="utf-8" />
+    </head>
+    <body>
+        <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:70vh;'>
+            <div class="dhx_cal_navline">
+                <div class="dhx_cal_prev_button">&nbsp;</div>
+                <div class="dhx_cal_next_button">&nbsp;</div>
+                <div class="dhx_cal_today_button"></div>
+                <div class="dhx_cal_date"></div>
+                <div class="dhx_cal_tab" name="day_tab"></div>
+                <div class="dhx_cal_tab" name="week_tab"></div>
+                <div class="dhx_cal_tab" name="month_tab"></div>
+            </div>
+            <div class="dhx_cal_header"></div>
+            <div class="dhx_cal_data">
+            </div>
+        </div>
+        <script src="~/Scripts/InitSchedule.js" type="text/javascript">
+        </script>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Text)
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Start)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.End)
+                    </th>
+                    <th>
+                        User first name
+                    </th>
+                    <th>
+                        User last name
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Text)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Start)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.End)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.LastName)
+                        </td>
+                        <td>
+                            <a asp-action="Accepted" asp-route-id="@item.Id">Accepted</a> |
+                            <a asp-action="Discard" asp-route-id="@item.Id">Discard</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </body>
+</html>

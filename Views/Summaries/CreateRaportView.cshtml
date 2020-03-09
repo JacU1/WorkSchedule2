@@ -1,0 +1,21 @@
+﻿@model WorkSchedule2.Models.Summary
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<div class="container">
+    <div class="row-no-gutters">
+        <h3 style="position:center">Your raport is generating and waiting for admin to grade your work!</h3>
+    </div>
+</div>
+
+<div>
+    <<form asp-controller="Users">
+    <div class="form-group">
+        <button asp-controller="Users" asp-action="UserIndex" class="btn btn-primary">Back to schedule</button>
+    </div>
+</form>
+</div>
+

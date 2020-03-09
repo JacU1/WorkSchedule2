@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WorkSchedule2.Migrations
 {
-    public partial class WorkScheduleMigration : Migration
+    public partial class ScheduleMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,8 @@ namespace WorkSchedule2.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Role = table.Column<string>(nullable: true),
                     DealType = table.Column<string>(nullable: true),
-                    PayPerHour = table.Column<decimal>(nullable: false),
-                    PayPerMonth = table.Column<decimal>(nullable: false)
+                    PayPerHour = table.Column<decimal>(nullable: true),
+                    PayPerMonth = table.Column<decimal>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,7 +33,7 @@ namespace WorkSchedule2.Migrations
                     Password = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<DateTime>(nullable: false),
+                    DateOfBirth = table.Column<DateTime>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
                     SmallImageUrl = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
@@ -41,9 +41,9 @@ namespace WorkSchedule2.Migrations
                     HomeNumber = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
-                    IsAdmin = table.Column<bool>(nullable: false),
-                    IsAvailable = table.Column<bool>(nullable: false),
-                    DealId = table.Column<int>(nullable: false)
+                    IsAdmin = table.Column<bool>(nullable: true),
+                    IsAvailable = table.Column<bool>(nullable: true),
+                    DealId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -57,27 +57,26 @@ namespace WorkSchedule2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Shifts",
+                name: "Sugestions",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Position = table.Column<string>(nullable: true),
-                    Start = table.Column<DateTime>(nullable: false),
-                    End = table.Column<DateTime>(nullable: false),
-                    Hoursworked = table.Column<int>(nullable: false),
-                    Supervisor = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false)
+                    Text = table.Column<string>(nullable: true),
+                    type = table.Column<string>(nullable: true),
+                    Start = table.Column<DateTime>(nullable: true),
+                    End = table.Column<DateTime>(nullable: true),
+                    UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Shifts", x => x.Id);
+                    table.PrimaryKey("PK_Sugestions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Shifts_Users_UserId",
+                        name: "FK_Sugestions_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,36 +85,69 @@ namespace WorkSchedule2.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalHoursWorked = table.Column<decimal>(nullable: false),
-                    Grade = table.Column<int>(nullable: false),
-                    Bonus = table.Column<decimal>(nullable: false),
-                    Salary = table.Column<decimal>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    ShiftId = table.Column<int>(nullable: true),
-                    DealId = table.Column<int>(nullable: true)
+                    TotalHoursWorked = table.Column<decimal>(nullable: true),
+                    Grade = table.Column<int>(nullable: true),
+                    Bonus = table.Column<decimal>(nullable: true),
+                    Salary = table.Column<decimal>(nullable: true),
+                    UserId = table.Column<int>(nullable: true),
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Summaries", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Summaries_Deals_DealId",
-                        column: x => x.DealId,
-                        principalTable: "Deals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Summaries_Shifts_ShiftId",
-                        column: x => x.ShiftId,
-                        principalTable: "Shifts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Summaries_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Vacations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ComplainText = table.Column<string>(nullable: true),
+                    Start = table.Column<DateTime>(nullable: true),
+                    End = table.Column<DateTime>(nullable: true),
+                    type = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vacations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vacations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Shifts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Position = table.Column<string>(nullable: true),
+                    Start = table.Column<DateTime>(nullable: true),
+                    End = table.Column<DateTime>(nullable: true),
+                    Hoursworked = table.Column<int>(nullable: true),
+                    Supervisor = table.Column<string>(nullable: true),
+                    type = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.ForeignKey(
+                        name: "FK_Shifts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
 
             migrationBuilder.CreateIndex(
                 name: "IX_Shifts_UserId",
@@ -123,14 +155,9 @@ namespace WorkSchedule2.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Summaries_DealId",
-                table: "Summaries",
-                column: "DealId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Summaries_ShiftId",
-                table: "Summaries",
-                column: "ShiftId");
+                name: "IX_Sugestions_UserId",
+                table: "Sugestions",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Summaries_UserId",
@@ -140,16 +167,28 @@ namespace WorkSchedule2.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Users_DealId",
                 table: "Users",
-                column: "DealId");
+                column: "DealId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vacations_UserId",
+                table: "Vacations",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Summaries");
+                name: "Shifts");
 
             migrationBuilder.DropTable(
-                name: "Shifts");
+                name: "Sugestions");
+
+            migrationBuilder.DropTable(
+                name: "Vacations");
+
+            migrationBuilder.DropTable(
+                name: "Summaries");
 
             migrationBuilder.DropTable(
                 name: "Users");
